@@ -13,16 +13,41 @@
     :root { --navy: #05264B; --deep: #031A36; --peach: #FFB88C; --cream: #FFF3E8; }
     * { box-sizing: border-box; margin: 0; }
     body {
+      position: relative; overflow-x: hidden;
       min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 32px 16px;
       background: var(--navy); color: var(--cream);
       font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif; text-align: center;
     }
-    main { width: 100%; max-width: 520px; }
-    img { width: 140px; height: 140px; }
+    /* Stelle lente e alone di luce dietro il logo, come nel video */
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .5;
+      background-image:
+        radial-gradient(1.5px 1.5px at 12% 18%, var(--cream), transparent), radial-gradient(1px 1px at 78% 12%, var(--cream), transparent),
+        radial-gradient(1.5px 1.5px at 64% 72%, var(--peach), transparent), radial-gradient(1px 1px at 22% 82%, var(--cream), transparent),
+        radial-gradient(1px 1px at 88% 58%, var(--cream), transparent), radial-gradient(1.5px 1.5px at 40% 34%, var(--peach), transparent),
+        radial-gradient(1px 1px at 8% 52%, var(--cream), transparent), radial-gradient(1px 1px at 52% 92%, var(--cream), transparent);
+      animation: twinkle 6s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { from { opacity: .25; } to { opacity: .6; } }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    @keyframes breathe { 0%, 100% { opacity: .55; transform: scale(1); } 50% { opacity: .85; transform: scale(1.06); } }
+    main { width: 100%; max-width: 520px; position: relative; }
+    main > * { animation: rise .9s ease-out both; }
+    main > *:nth-child(2) { animation-delay: .1s; } main > *:nth-child(3) { animation-delay: .2s; }
+    main > *:nth-child(4) { animation-delay: .35s; } main > *:nth-child(5) { animation-delay: .5s; }
+    main > *:nth-child(6) { animation-delay: .65s; } main > *:nth-child(7) { animation-delay: .8s; } main > *:nth-child(8) { animation-delay: .9s; }
+    .logo { position: relative; width: 160px; height: 160px; margin: 0 auto; }
+    .logo::before {
+      content: ""; position: absolute; inset: -70px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,184,140,.35), transparent 65%); animation: breathe 5s ease-in-out infinite;
+    }
+    .logo img { position: relative; width: 160px; height: 160px; }
+    .line { width: 60px; height: 1px; background: var(--peach); opacity: .5; margin: 30px auto 0; }
+    @media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; } }
     h1 { font-size: 44px; letter-spacing: -1px; margin-top: 16px; }
     h1 span { color: var(--peach); font-weight: 500; }
     .tag { letter-spacing: 6px; font-size: 13px; opacity: .7; margin-top: 6px; }
-    .motto { font-size: 22px; font-weight: 600; margin-top: 36px; }
+    .motto { font-size: 24px; font-weight: 600; margin-top: 26px; letter-spacing: -.3px; }
     .wip { margin-top: 14px; opacity: .8; line-height: 1.5; }
     .links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
     .invite { font-size: 19px; color: var(--peach); font-weight: 600; margin-top: 24px; line-height: 1.4; }
@@ -31,18 +56,20 @@
       text-decoration: none; font-weight: 700; padding: 13px 24px; border-radius: 999px;
     }
     a svg { width: 22px; height: 22px; fill: var(--navy); }
-    a:hover { background: var(--cream); }
+    a { transition: background .25s, transform .25s; box-shadow: 0 0 24px rgba(255,184,140,.25); }
+    a:hover { background: var(--cream); transform: translateY(-2px); }
     footer { margin-top: 48px; font-size: 13px; opacity: .5; }
   </style>
 </head>
 <body>
   <main>
-    <img src="logo.png" alt="Logo di musulmani.org">
+    <div class="logo"><img src="logo.png" alt="Logo di musulmani.org"></div>
     <h1>musulmani<span>.org</span></h1>
     <p class="tag">I MUSULMANI IN ITALIA</p>
+    <div class="line"></div>
     <p class="motto">Una sola ummah. Un solo posto.</p>
-    <p class="wip">Il sito è nuovo e ci stiamo ancora lavorando, in sha Allah.</p>
-    <p class="invite">Sii tra i primi a far parte della futura comunità musulmana più grande d'Italia!</p>
+    <p class="wip">Il sito è nuovo e ci stiamo ancora lavorando.</p>
+    <p class="invite">Sii tra i primi a far parte della futura comunità musulmana più grande d'Italia, in sha Allah 🤲</p>
     <div class="links">
       <a href="https://www.instagram.com/musulmani.org/" aria-label="Instagram di musulmani.org">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></svg>
